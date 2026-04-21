@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>잡학다식 — Daily Intelligence Briefing</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- MASTHEAD -->
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="masthead-logo">잡학다식</div>
+      <div class="masthead-tagline">DAILY INTELLIGENCE BRIEFING — CURATED BY AI</div>
+    </div>
+  </header>
+
+  <!-- META BAR -->
+  <div class="meta-bar">
+    <span id="issue-num">VOL. 1 · Loading...</span>
+    <span>뉴스 · 경제 · 글로벌 이슈</span>
+    <span id="updated-at">업데이트 중...</span>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <button class="nav-item active" data-tab="news">TODAY'S BRIEFING</button>
+    <button class="nav-item" data-tab="economy">ECONOMY</button>
+    <button class="nav-item" data-tab="issues">GLOBAL ISSUES</button>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-grid">
+
+    <!-- LEFT: NEWS -->
+    <section class="col-main" id="tab-news">
+      <div class="section-label">TOP STORIES</div>
+      <div id="news-lead-container">
+        <div class="loading-placeholder">뉴스 로딩 중...</div>
+      </div>
+      <div class="section-label" style="margin-top: 8px;">MORE NEWS</div>
+      <div id="news-more-container"></div>
+    </section>
+
+    <!-- ECONOMY TAB -->
+    <section class="col-main hidden" id="tab-economy">
+      <div class="section-label">경제 지표 상세</div>
+      <div id="economy-detail-container">
+        <div class="loading-placeholder">경제 데이터 로딩 중...</div>
+      </div>
+    </section>
+
+    <!-- ISSUES TAB -->
+    <section class="col-main hidden" id="tab-issues">
+      <div class="section-label">글로벌 이슈 트래커</div>
+      <div id="issues-detail-container">
+        <div class="loading-placeholder">이슈 데이터 로딩 중...</div>
+      </div>
+    </section>
+
+    <div class="col-divider"></div>
+
+    <!-- RIGHT: SIDEBAR -->
+    <aside class="col-sidebar">
+      <div class="section-label">경제 지표</div>
+      <div id="econ-sidebar-container">
+        <div class="loading-placeholder">로딩 중...</div>
+      </div>
+
+      <div class="section-label" style="margin-top: 20px;">글로벌 이슈</div>
+      <div id="issues-sidebar-container">
+        <div class="loading-placeholder">로딩 중...</div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>잡학다식 — AI-powered daily briefing</span>
+    <span>데이터 출처: Claude API + Web Search</span>
+    <span>github.com/hyeonseo801</span>
+  </footer>
+
+  <script src="assets/main.js"></script>
+</body>
+</html>

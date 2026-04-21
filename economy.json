@@ -1,0 +1,9 @@
+{
+  "indicators": [
+    { "name": "코스피",       "value": "2,612", "change": "+1.2%", "trend": "up",  "description": "전일 대비 +31.2p" },
+    { "name": "원 / 달러",   "value": "1,384", "change": "+0.3%", "trend": "dn",  "description": "원화 약세 지속" },
+    { "name": "미국 기준금리","value": "4.25%", "change": "동결",  "trend": "neu", "description": "5월 동결 전망 우세" },
+    { "name": "WTI 유가",    "value": "$71.4", "change": "-0.8%", "trend": "dn",  "description": "수요 둔화 우려" }
+  ],
+  "ai_comment": "환율 상승세 지속으로 수출주 단기 수혜 예상. 내수 소비 위축 리스크 병존. 5월 FOMC 전까지 관망세 유지 권고."
+}
