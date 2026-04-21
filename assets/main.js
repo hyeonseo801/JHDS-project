@@ -35,7 +35,7 @@ function renderNews(data) {
     <div class="news-lead">
       <span class="news-tag ${item.tag}">${TAG_MAP[item.tag] || item.tag}</span>
       <div class="news-lead-title">${item.title}</div>
-      <div class="news-lead-desc">${item.summary}</div>
+      ${item.summary ? `<div class="news-lead-desc">${item.summary}</div>` : ''}
       <div class="news-lead-meta">${item.category} · ${item.time} · AI 요약</div>
     </div>
   `).join('');
@@ -53,36 +53,41 @@ function renderNews(data) {
 
 // ── 경제 사이드바 렌더 ───────────────────────────────
 function renderEconSidebar(data) {
+  const points = (data.points || []).map(p => `
+    <div class="econ-block">
+      <div class="econ-label">${p.icon} ${p.text}</div>
+    </div>
+  `).join('');
+
   document.getElementById('econ-sidebar-container').innerHTML = `
-    ${data.indicators.map(ind => `
-      <div class="econ-block">
-        <div class="econ-label">${ind.name}</div>
-        <span class="econ-value">${ind.value}</span>
-        <span class="badge ${ind.trend}">${ind.change}</span>
-      </div>
-    `).join('')}
+    ${points}
     <div class="ai-comment">
       <div class="ai-comment-label">AI COMMENT</div>
-      <div class="ai-comment-text">${data.ai_comment}</div>
+      <div class="ai-comment-text">${data.summary || ''}</div>
     </div>
   `;
 }
 
 // ── 경제 탭 상세 렌더 ────────────────────────────────
 function renderEconDetail(data) {
-  document.getElementById('economy-detail-container').innerHTML = `
-    <div class="econ-detail-grid">
-      ${data.indicators.map(ind => `
-        <div class="econ-detail-card">
-          <div class="econ-detail-name">${ind.name}</div>
-          <div class="econ-detail-val" style="color: ${ind.trend === 'up' ? 'var(--up)' : ind.trend === 'dn' ? 'var(--dn)' : 'var(--ink)'}">${ind.value}</div>
-          <div class="econ-detail-sub">${ind.change} · ${ind.description}</div>
-        </div>
-      `).join('')}
+  const points = (data.points || []).map(p => `
+    <div class="econ-detail-card">
+      <div class="econ-detail-name">${p.icon}</div>
+      <div class="econ-detail-val" style="font-size:14px;color:var(--ink)">${p.text}</div>
     </div>
-    <div class="ai-comment">
+  `).join('');
+
+  const watchlist = (data.watchlist || []).map(w => `
+    <span class="news-tag def" style="margin-right:6px;margin-bottom:6px;display:inline-block">${w}</span>
+  `).join('');
+
+  document.getElementById('economy-detail-container').innerHTML = `
+    <div class="econ-detail-grid">${points}</div>
+    <div class="section-label" style="margin-top:20px">주목 키워드</div>
+    <div style="margin-top:10px">${watchlist}</div>
+    <div class="ai-comment" style="margin-top:16px">
       <div class="ai-comment-label">AI MARKET ANALYSIS</div>
-      <div class="ai-comment-text">${data.ai_comment}</div>
+      <div class="ai-comment-text">${data.summary || ''}</div>
     </div>
   `;
 }
@@ -136,8 +141,24 @@ async function init() {
     renderIssues(issues);
   } catch (err) {
     console.error('데이터 로드 실패:', err);
-    document.getElementById('news-lead-container').innerHTML =
-      '<div class="loading-placeholder">데이터를 불러오지 못했습니다. generate.py를 먼저 실행하세요.</div>';
+    // 개별 로드로 폴백
+    try {
+      const news = await loadData('data/news.json');
+      renderMeta(news);
+      renderNews(news);
+    } catch(e) {
+      document.getElementById('news-lead-container').innerHTML =
+        '<div class="loading-placeholder">데이터를 불러오지 못했습니다. generate.py를 먼저 실행하세요.</div>';
+    }
+    try {
+      const economy = await loadData('data/economy.json');
+      renderEconSidebar(economy);
+      renderEconDetail(economy);
+    } catch(e) {}
+    try {
+      const issues = await loadData('data/issues.json');
+      renderIssues(issues);
+    } catch(e) {}
   }
 }
 
